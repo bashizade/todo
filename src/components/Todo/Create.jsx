@@ -2,15 +2,24 @@ import { useFormik } from "formik";
 import Button from "../Button";
 import { Input } from "../Form";
 import { CreateSchema } from "../../validations/Task"
+import {Axios} from "../../configs/Axios";
+import Toastify from "../Toastify"
 
-const Create = () => {
+const Create = ({getData}) => {
     const form = useFormik({
         initialValues: {
-            task: ""
+            task: "",
+            complete: false
         },
 
         onSubmit: values => {
-            alert(values)
+            Axios.post('/tasks', values).then(res => {
+                Toastify("success","تسک مورد نظر با موفقیت ذخیره شد");
+                getData()
+                form.resetForm()
+            }).catch( err => {
+                console.log(err)
+            })
         },
 
         validationSchema: CreateSchema
