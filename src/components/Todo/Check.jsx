@@ -1,10 +1,10 @@
 import { Axios } from "../../configs/Axios";
 import Toastify from "../Toastify";
 
-export const Complete = (title,taskId,getData) => {
+export const Check = (title,complete,taskId,getData) => {
     Axios.put('tasks/'+taskId,{
         task: title,
-        complete: true
+        complete: complete ? false : true
     }).then(res => {
         Toastify("success","با موفقیت تایید شد");
         getData();
